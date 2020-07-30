@@ -41,41 +41,53 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Publish nuget
-      run: echo $"{{ event.release.assets[].browser_download_url }}"
+      run: echo $"{{ event.release.assets[0].browser_download_url }}"
     
-    - name: Build
-      run: dotnet build --configuration Release -p:Version=${{ env.VERSION_NUMBER }} 
+    - name: Download packages
+      run: |
+        file=${{ github.event.release.assets[0].browser_download_url }}
+        echo $file
+        curl $file --output github.event.release.assets[0].name
+        
+    - name: Download packages2
+      run: |
+        file=${{ github.event.release.assets[1].browser_download_url }}
+        echo $file
+        curl $file --output github.event.release.assets[1].name
+        
+#     - name: Build
+#       run: dotnet build --configuration Release -p:Version=${{ env.VERSION_NUMBER }} 
 
-    - name: Test
-      run: dotnet test --configuration Release --no-build --verbosity normal
+#     - name: Test
+#       run: dotnet test --configuration Release --no-build --verbosity normal
 
-    - name: Pack
-      if: github.event_name == 'push' || (github.event_name != 'pull_request')
-      run: dotnet pack --configuration Release --no-build --verbosity normal --output ./Artifacts/ -p:Version=${{ env.VERSION_NUMBER }} 
+#     - name: Pack
+#       if: github.event_name == 'push' || (github.event_name != 'pull_request')
+#       run: dotnet pack --configuration Release --no-build --verbosity normal --output ./Artifacts/ -p:Version=${{ env.VERSION_NUMBER }} 
 
-    - name: Create Release
-      if: github.event_name == 'push' || (github.event_name != 'pull_request')
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: release/${{ env.VERSION_NUMBER }}.2 
-        release_name: Release Version (2) ${{ env.VERSION_NUMBER }}.2
-        body: |
-          Automatic Release ${{ env.VERSION_NUMBER }}  
-          - Release automatically generated.
-        draft: true
-        prerelease: false
+#     - name: Create Release
+#       if: github.event_name == 'push' || (github.event_name != 'pull_request')
+#       id: create_release
+#       uses: actions/create-release@v1
+#       env:
+#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       with:
+#         tag_name: release/${{ env.VERSION_NUMBER }}.2 
+#         release_name: Release Version (2) ${{ env.VERSION_NUMBER }}.2
+#         body: |
+#           Automatic Release ${{ env.VERSION_NUMBER }}  
+#           - Release automatically generated.
+#         draft: true
+#         prerelease: false
 
-    - name: Upload Release Asset
-      if: github.event_name == 'push' || (github.event_name != 'pull_request')
-      id: upload-release-asset 
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./Artifacts/Nivaes.Async.${{ env.VERSION_NUMBER }}.nupkg
-        asset_name: Nivaes.Async.${{ env.VERSION_NUMBER }}.nupkg
-        asset_content_type: application/octet-stream
+#     - name: Upload Release Asset
+#       if: github.event_name == 'push' || (github.event_name != 'pull_request')
+#       id: upload-release-asset 
+#       uses: actions/upload-release-asset@v1
+#       env:
+#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       with:
+#         upload_url: ${{ steps.create_release.outputs.upload_url }}
+#         asset_path: ./Artifacts/Nivaes.Async.${{ env.VERSION_NUMBER }}.nupkg
+#         asset_name: Nivaes.Async.${{ env.VERSION_NUMBER }}.nupkg
+#         asset_content_type: application/octet-stream
