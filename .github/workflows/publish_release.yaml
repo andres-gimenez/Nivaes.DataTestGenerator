@@ -35,10 +35,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    #- name: Publish nuget
-    #  if: github.event.action = "released"
-    #  run: echo $"{{ event.release.assets[].browser_download_url }}"
+    - name: Publish nuget
+      #if: github.event.action = "released"
+      run: echo $"{{ event.release.assets[].browser_download_url }}"
 
-    #- name: Publish prereleased nuget
-    #  if: github.event.action = "prereleased"
-    #  run: echo $"{{ event.release.assets[].browser_download_url }}"
+#     - name: Publish prereleased nuget
+#      if: github.event.action = "prereleased"
+#      run: echo $"{{ event.release.assets[].browser_download_url }}"
