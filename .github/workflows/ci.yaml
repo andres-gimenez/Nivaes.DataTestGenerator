@@ -23,6 +23,7 @@ jobs:
     - name: Version
       run: echo ${{ steps.get_version.outputs.version }}
       
+      
     - name: Dump GitHub context
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
