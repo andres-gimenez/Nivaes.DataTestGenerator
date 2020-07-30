@@ -79,14 +79,13 @@ jobs:
         asset_name: Nivaes.DataTestGenerator.${{ env.VERSION_NUMBER }}.nupkg
         asset_content_type: application/octet-stream
 
-    - name: Upload Release Asset (Nivaes.DataTestGenerator.Xunit)
+    - name: Upload Release Asset (Nivaes.DataTestGenerator.XUnit)
       if: github.event_name == 'push' || (github.event_name != 'pull_request')
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./Artifacts/Nivaes.DataTestGenerator.Xunit.${{ env.VERSION_NUMBER }}.nupkg
-        asset_name: Nivaes.DataTestGenerator.Xunit.${{ env.VERSION_NUMBER }}.nupkg
+        asset_path: ./Artifacts/Nivaes.DataTestGenerator.XUnit.${{ env.VERSION_NUMBER }}.nupkg
+        asset_name: Nivaes.DataTestGenerator.XUnit.${{ env.VERSION_NUMBER }}.nupkg
         asset_content_type: application/octet-stream
-
