@@ -2,10 +2,10 @@ name: Publish Release
 
 on:
   release:
-    types: [published]
-    #types: [released]
-    #types: [prereleased]
-    #types: [deleted]
+#     types: [published]
+#     types: [released]
+#     types: [prereleased]
+#     types: [deleted]
 
 jobs:
   publish_release:
