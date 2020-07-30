@@ -17,6 +17,12 @@ jobs:
     runs-on: ubuntu-18.04
 
     steps:
+    - name: Read version
+      uses: nivaes/get-version
+      
+    - name: Version
+      run: echo ${{ steps.get_version.outputs.version }}
+      
     - name: Dump GitHub context
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
