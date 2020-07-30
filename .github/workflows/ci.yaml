@@ -25,7 +25,10 @@ jobs:
     
     - name: Prueba
       run: echo ${{ steps.get_version.outputs.p1 }}
-
+      
+    - name: Prueba
+      run: echo ${{ steps.get_version.outputs.p2 }}
+       
     - name: Dump GitHub context
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
