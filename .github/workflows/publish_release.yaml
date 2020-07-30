@@ -41,7 +41,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Publish nuget
-      run: echo $"{{ event.release.assets[0].browser_download_url }}"
+      run: echo $"{{ github.event.release.assets[].browser_download_url }}"
     
     - name: Download packages
       run: |
