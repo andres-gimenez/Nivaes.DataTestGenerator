@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - name: Read version
-      uses: nivaes/get-version
+      uses: nivaes/get-version@master
       
     - name: Version
       run: echo ${{ steps.get_version.outputs.version }}
