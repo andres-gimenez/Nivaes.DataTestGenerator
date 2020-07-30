@@ -7,7 +7,7 @@
     {
         #region Propeties
         /// <summary>Reference to <see cref="Random"/>.</summary>
-        private static Random mRandom;
+        private static Random mRandom; 
         #endregion
 
         #region Constructor
