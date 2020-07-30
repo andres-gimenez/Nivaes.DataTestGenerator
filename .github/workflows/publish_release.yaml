@@ -12,6 +12,12 @@ jobs:
     runs-on: ubuntu-18.04
 
     steps:
+    - name: Read version
+      uses: nivaes/get-version
+      
+    - name: Version
+      run: echo ${{ steps.get_version.outputs.version }}
+      
     - id: get_version
       uses: battila7/get-version-action@v2
 
