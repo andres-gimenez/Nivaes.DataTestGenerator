@@ -67,3 +67,13 @@ jobs:
 
     - name: Test
       run: dotnet test --configuration Release --no-build --verbosity normal 
+    
+    - id: get_version
+      uses: battila7/get-version-action@v2
+
+    - run: echo ${{ steps.get_version.outputs.version }}
+
+    - name: Dump steps context
+      env:
+        STEPS_CONTEXT: ${{ toJson(steps) }}
+      run: echo "$STEPS_CONTEXT"
