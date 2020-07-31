@@ -59,14 +59,6 @@ jobs:
     - name: Download Release Asset
       uses: nivaes/download-release-assets@master
 
-#     - name: Checkout
-#       uses: actions/checkout@v2
-
-#     - name: Setup .NET Core
-#       uses: actions/setup-dotnet@v1
-#       with:
-#         dotnet-version: 5.0.100-rc.1.20379.13
-
 #     - name: Build
 #       run: dotnet build --configuration Release -p:Version=${{ steps.get_version.outputs.version }} 
 
@@ -83,17 +75,17 @@ jobs:
 #     - name: Publish nuget
 #       run: echo $"{{ github.event.release.assets.*.browser_download_url }}"
     
-    - name: Download packages
-      run: |
-        file=${{ github.event.release.assets[0].browser_download_url }}
-        echo $file
-        curl $file --output github.event.release.assets[0].name
+#     - name: Download packages
+#       run: |
+#         file=${{ github.event.release.assets[0].browser_download_url }}
+#         echo $file
+#         curl $file --output github.event.release.assets[0].name
         
-    - name: Download packages2
-      run: |
-        file=${{ github.event.release.assets[1].browser_download_url }}
-        echo $file
-        curl $file --output github.event.release.assets[1].name
+#     - name: Download packages2
+#       run: |
+#         file=${{ github.event.release.assets[1].browser_download_url }}
+#         echo $file
+#         curl $file --output github.event.release.assets[1].name
         
 #     - name: Build
 #       run: dotnet build --configuration Release -p:Version=${{ env.VERSION_NUMBER }} 
