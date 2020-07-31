@@ -61,7 +61,6 @@ jobs:
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       uses: nivaes/download-release-assets@master
 
-#     - name: Build
 #       run: dotnet build --configuration Release -p:Version=${{ steps.get_version.outputs.version }} 
 
 #     - name: Test
