@@ -20,11 +20,15 @@ jobs:
       id: get_version
 
     - name: release
-      if: github.event_name.types == 'released'
+      if: github.event_name.types == 'release'
       run: echo Release
 
     - name: release
-      if: github.event_name.types == 'prereleased'
+      if: github.event.action == 'released'
+      run: echo Released
+
+    - name: release
+      if: github.event.action == 'prereleased'
       run: echo Prereleased
       
     - name: Dump GitHub context
@@ -54,6 +58,11 @@ jobs:
 
     - name: Checkout
       uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.100-rc.1.20379.13
 
     - name: Build
       run: dotnet build --configuration Release -p:Version=${{ steps.get_version.outputs.version }} 
