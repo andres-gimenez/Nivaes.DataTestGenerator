@@ -25,9 +25,6 @@ jobs:
       uses: nivaes/get-version@master
       id: get_version
       
-#     - name: Version
-#       run: echo ${{ steps.get_version.outputs.version }}
-
     - name: Dump GitHub context
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
@@ -58,12 +55,6 @@ jobs:
 
     - name: Branch name
       uses: nelonoel/branch-name@v1
-
-#     - name: Set version
-#       run: echo ::set-env name=VERSION_NUMBER::${BRANCH_NAME}.${{ github.run_number }}
-
-#     - name: Version
-#       run: echo ${{ env.VERSION_NUMBER }}
 
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
