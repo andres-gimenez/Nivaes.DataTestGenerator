@@ -21,12 +21,12 @@ jobs:
     runs-on: ubuntu-18.04
 
     steps:
-    - name: Read version
+    - name: Get Version
       uses: nivaes/get-version@master
       id: get_version
       
-    - name: Version
-      run: echo ${{ steps.get_version.outputs.version }}
+#     - name: Version
+#       run: echo ${{ steps.get_version.outputs.version }}
 
     - name: Dump GitHub context
       env:
@@ -87,7 +87,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: release/${{ steps.get_version.outputs.version }}
+        tag_name: release/v${{ steps.get_version.outputs.version }}
         release_name: Release Version ${{ steps.get_version.outputs.version }}
         body: |
           Automatic Release ${{ steps.get_version.outputs.version }}  
