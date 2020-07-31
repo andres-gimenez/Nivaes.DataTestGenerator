@@ -17,17 +17,15 @@ jobs:
     steps:
     - name: Read version
       uses: nivaes/get-version@master
-      
-    - name: Version
-      run: echo ${{ steps.get_version.outputs.version }}
-      
-#     - id: get_version
-#       uses: battila7/get-version-action@v2
+      id: get_version
 
+    - name: release
+      if: github.event_name.types == 'released'
+      run: echo Release
 
-    - run: echo ${{ steps.get_version.outputs.version }}
-
-    - run: echo ${{ steps.get_version.outputs.version-without-v }}
+    - name: release
+      if: github.event_name.types == 'prereleased'
+      run: echo Prereleased
       
     - name: Dump GitHub context
       env:
@@ -57,20 +55,33 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
+    - name: Build
+      run: dotnet build --configuration Release -p:Version=${{ steps.get_version.outputs.version }} 
+
+    - name: Test
+      run: dotnet test --configuration Release --no-build --verbosity normal
+
+    - name: Pack
+      if: github.event_name == 'push' || (github.event_name != 'pull_request')
+      run: dotnet pack --configuration Release --no-build --verbosity normal --output ./Artifacts/ -p:Version=${{ steps.get_version.outputs.version }} 
+
     - name: Publish nuget
       run: echo $"{{ github.event.release.assets[].browser_download_url }}"
+      
+    - name: Publish nuget
+      run: echo $"{{ github.event.release.assets.*.browser_download_url }}"
     
-    - name: Download packages
-      run: |
-        file=${{ github.event.release.assets[0].browser_download_url }}
-        echo $file
-        curl $file --output github.event.release.assets[0].name
+#     - name: Download packages
+#       run: |
+#         file=${{ github.event.release.assets[0].browser_download_url }}
+#         echo $file
+#         curl $file --output github.event.release.assets[0].name
         
-    - name: Download packages2
-      run: |
-        file=${{ github.event.release.assets[1].browser_download_url }}
-        echo $file
-        curl $file --output github.event.release.assets[1].name
+#     - name: Download packages2
+#       run: |
+#         file=${{ github.event.release.assets[1].browser_download_url }}
+#         echo $file
+#         curl $file --output github.event.release.assets[1].name
         
 #     - name: Build
 #       run: dotnet build --configuration Release -p:Version=${{ env.VERSION_NUMBER }} 
@@ -109,10 +120,4 @@ jobs:
 #         asset_name: Nivaes.Async.${{ env.VERSION_NUMBER }}.nupkg
 #         asset_content_type: application/octet-stream
 
-    - name: release
-      if: github.event_name.types == 'released'
-      run: echo Release
 
-    - name: release
-      if: github.event_name.types == 'prereleased'
-      run: echo Prereleased
