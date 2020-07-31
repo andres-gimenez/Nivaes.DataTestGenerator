@@ -23,11 +23,11 @@ jobs:
       if: github.event_name.types == 'release'
       run: echo Release
 
-    - name: release
+    - name: released
       if: github.event.action == 'released'
       run: echo Released
 
-    - name: release
+    - name: prereleased
       if: github.event.action == 'prereleased'
       run: echo Prereleased
       
@@ -55,30 +55,33 @@ jobs:
       env:
         MATRIX_CONTEXT: ${{ toJson(matrix) }}
       run: echo "$MATRIX_CONTEXT"
-
-    - name: Checkout
-      uses: actions/checkout@v2
-
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 5.0.100-rc.1.20379.13
-
-    - name: Build
-      run: dotnet build --configuration Release -p:Version=${{ steps.get_version.outputs.version }} 
-
-    - name: Test
-      run: dotnet test --configuration Release --no-build --verbosity normal
-
-    - name: Pack
-      if: github.event_name == 'push' || (github.event_name != 'pull_request')
-      run: dotnet pack --configuration Release --no-build --verbosity normal --output ./Artifacts/ -p:Version=${{ steps.get_version.outputs.version }} 
-
-    - name: Publish nuget
-      run: echo $"{{ github.event.release.assets[].browser_download_url }}"
       
-    - name: Publish nuget
-      run: echo $"{{ github.event.release.assets.*.browser_download_url }}"
+    - name: Download Release Asset
+      uses: nivaes/download-release-assets@master
+  
+#     - name: Checkout
+#       uses: actions/checkout@v2
+
+#     - name: Setup .NET Core
+#       uses: actions/setup-dotnet@v1
+#       with:
+#         dotnet-version: 5.0.100-rc.1.20379.13
+
+#     - name: Build
+#       run: dotnet build --configuration Release -p:Version=${{ steps.get_version.outputs.version }} 
+
+#     - name: Test
+#       run: dotnet test --configuration Release --no-build --verbosity normal
+
+#     - name: Pack
+#       if: github.event_name == 'push' || (github.event_name != 'pull_request')
+#       run: dotnet pack --configuration Release --no-build --verbosity normal --output ./Artifacts/ -p:Version=${{ steps.get_version.outputs.version }} 
+
+#     - name: Publish nuget
+#       run: echo $"{{ github.event.release.assets[].browser_download_url }}"
+      
+#     - name: Publish nuget
+#       run: echo $"{{ github.event.release.assets.*.browser_download_url }}"
     
 #     - name: Download packages
 #       run: |
