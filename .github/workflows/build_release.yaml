@@ -70,52 +70,49 @@ jobs:
       with:
         dotnet-version: 5.0.100-rc.1.20379.13
 
-#     - name: Build
-#       run: dotnet build --configuration Release -p:Version=${{ env.VERSION_NUMBER }} 
-
     - name: Build
       run: dotnet build --configuration Release -p:Version=${{ steps.get_version.outputs.version }} 
 
-#     - name: Test
-#       run: dotnet test --configuration Release --no-build --verbosity normal
+    - name: Test
+      run: dotnet test --configuration Release --no-build --verbosity normal
 
-#     - name: Pack
-#       if: github.event_name == 'push' || (github.event_name != 'pull_request')
-#       run: dotnet pack --configuration Release --no-build --verbosity normal --output ./Artifacts/ -p:Version=${{ env.VERSION_NUMBER }} 
+    - name: Pack
+      if: github.event_name == 'push' || (github.event_name != 'pull_request')
+      run: dotnet pack --configuration Release --no-build --verbosity normal --output ./Artifacts/ -p:Version=${{ steps.get_version.outputs.version }} 
 
-#     - name: Create Release
-#       if: github.event_name == 'push' || (github.event_name != 'pull_request')
-#       id: create_release
-#       uses: actions/create-release@v1
-#       env:
-#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#       with:
-#         tag_name: release/${{ env.VERSION_NUMBER }} 
-#         release_name: Release Version ${{ env.VERSION_NUMBER }} 
-#         body: |
-#           Automatic Release ${{ env.VERSION_NUMBER }}  
-#           - Release automatically generated.
-#         draft: true
-#         prerelease: false
+    - name: Create Release
+      if: github.event_name == 'push' || (github.event_name != 'pull_request')
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: release/${{ steps.get_version.outputs.version }}
+        release_name: Release Version ${{ steps.get_version.outputs.version }}
+        body: |
+          Automatic Release ${{ steps.get_version.outputs.version }}  
+          - Release automatically generated.
+        draft: true
+        prerelease: false
 
-#     - name: Upload Release Asset (Nivaes.DataTestGenerator)
-#       if: github.event_name == 'push' || (github.event_name != 'pull_request')
-#       uses: actions/upload-release-asset@v1
-#       env:
-#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#       with:
-#         upload_url: ${{ steps.create_release.outputs.upload_url }}
-#         asset_path: ./Artifacts/Nivaes.DataTestGenerator.${{ env.VERSION_NUMBER }}.nupkg
-#         asset_name: Nivaes.DataTestGenerator.${{ env.VERSION_NUMBER }}.nupkg
-#         asset_content_type: application/octet-stream
+    - name: Upload Release Asset (Nivaes.DataTestGenerator)
+      if: github.event_name == 'push' || (github.event_name != 'pull_request')
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./Artifacts/Nivaes.DataTestGenerator.${{ steps.get_version.outputs.version }}.nupkg
+        asset_name: Nivaes.DataTestGenerator.${{ steps.get_version.outputs.version }} .nupkg
+        asset_content_type: application/octet-stream
 
-#     - name: Upload Release Asset (Nivaes.DataTestGenerator.XUnit)
-#       if: github.event_name == 'push' || (github.event_name != 'pull_request')
-#       uses: actions/upload-release-asset@v1
-#       env:
-#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#       with:
-#         upload_url: ${{ steps.create_release.outputs.upload_url }}
-#         asset_path: ./Artifacts/Nivaes.DataTestGenerator.XUnit.${{ env.VERSION_NUMBER }}.nupkg
-#         asset_name: Nivaes.DataTestGenerator.XUnit.${{ env.VERSION_NUMBER }}.nupkg
-#         asset_content_type: application/octet-stream
+    - name: Upload Release Asset (Nivaes.DataTestGenerator.XUnit)
+      if: github.event_name == 'push' || (github.event_name != 'pull_request')
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./Artifacts/Nivaes.DataTestGenerator.XUnit.${{ steps.get_version.outputs.version }}.nupkg
+        asset_name: Nivaes.DataTestGenerator.XUnit.${{ steps.get_version.outputs.version }}.nupkg
+        asset_content_type: application/octet-stream
