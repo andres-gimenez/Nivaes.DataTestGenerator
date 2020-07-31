@@ -24,6 +24,9 @@ jobs:
     - name: Get Version
       uses: nivaes/get-version@master
       id: get_version
+   
+    - name: Dump dump
+      run: echo ${{ secrets.GITHUB_TOKEN }}
       
     - name: Dump GitHub context
       env:
