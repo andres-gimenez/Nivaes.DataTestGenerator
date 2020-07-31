@@ -57,6 +57,8 @@ jobs:
       run: echo "$MATRIX_CONTEXT"
       
     - name: Download Release Asset
+      env:
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       uses: nivaes/download-release-assets@master
 
 #     - name: Build
