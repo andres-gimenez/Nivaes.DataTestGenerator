@@ -23,6 +23,13 @@ jobs:
         tag: "release/v2.6.53"
         fileName: "Nivaes.DataTestGenerator.2.6.53.nupkg"
 
+    - uses: robinraju/release-downloader@v1
+      with:
+        repository: "Nivaes/Nivaes.App.Shared"
+        tag: "release/v0.2.3"
+        fileName: "Nivaes.App.Compilers.Toolset.0.2.3.nupkg"
+        token: ${{ secrets.TOKENN }}
+
     - name: Dump GitHub context
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
