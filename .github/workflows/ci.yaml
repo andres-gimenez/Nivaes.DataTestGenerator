@@ -15,8 +15,14 @@ jobs:
   build:
 
     runs-on: ubuntu-18.04
-
+    
     steps:
+    - uses: robinraju/release-downloader@v1
+      with:
+        repository: "andres-gimenez/Nivaes.DataTestGenerator"
+        tag: "release/v2.6.53"
+        fileName: "Nivaes.DataTestGenerator.2.6.53.nupkg"
+
     - name: Dump GitHub context
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
