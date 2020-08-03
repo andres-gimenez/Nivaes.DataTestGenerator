@@ -63,10 +63,11 @@ jobs:
       run: echo ${{ github.event_name }}
 
     - name: Dump upload_url 1
-      run: echo ${{ github.event.release.assets }}
+      run: echo ${{ join(github.event.release.assets.*.name, ', ')   }}
+
 
     - name: Dump upload_url 1_2
-      run: echo ${{ github.event.upload_url }}
+      run: echo ${{ github.event.release.upload_url }}
 
     - name: Checkout
       uses: actions/checkout@v2
