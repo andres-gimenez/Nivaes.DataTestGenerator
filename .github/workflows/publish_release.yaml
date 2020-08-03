@@ -55,6 +55,12 @@ jobs:
       env:
         MATRIX_CONTEXT: ${{ toJson(matrix) }}
       run: echo "$MATRIX_CONTEXT"
+
+    - name: Dump upload_url
+      run: echo ${{ github.context.event.release.upload_url }}
+
+    - name: Dump upload_url 2
+      run: echo ${{ github.context.release.upload_url }}
       
     - name: Download Release Asset
       env:

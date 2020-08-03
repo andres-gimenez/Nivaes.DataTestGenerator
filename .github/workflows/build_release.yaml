@@ -83,7 +83,7 @@ jobs:
         draft: true
         prerelease: false
 
-    - name: Dump matrix context
+    - name: Dump upload_url
       run: echo ${{ steps.create_release.outputs.upload_url }}
 
     - name: Upload Release Asset
@@ -93,28 +93,6 @@ jobs:
       with:
          upload_url: ${{ steps.create_release.outputs.upload_url }}
          targets: ./Artifacts/**/*.nupkg
-         
-#     - name: Upload Release Asset (Nivaes.DataTestGenerator)
-#       if: github.event_name == 'push' || (github.event_name != 'pull_request')
-#       uses: actions/upload-release-asset@v1
-#       env:
-#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#       with:
-#         upload_url: ${{ steps.create_release.outputs.upload_url }}
-#         asset_path: ./Artifacts/Nivaes.DataTestGenerator.${{ steps.get_version.outputs.version }}.nupkg
-#         asset_name: Nivaes.DataTestGenerator.${{ steps.get_version.outputs.version }} .nupkg
-#         asset_content_type: application/octet-stream
-
-#     - name: Upload Release Asset (Nivaes.DataTestGenerator.XUnit)
-#       if: github.event_name == 'push' || (github.event_name != 'pull_request')
-#       uses: actions/upload-release-asset@v1
-#       env:
-#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#       with:
-#         upload_url: ${{ steps.create_release.outputs.upload_url }}
-#         asset_path: ./Artifacts/Nivaes.DataTestGenerator.XUnit.${{ steps.get_version.outputs.version }}.nupkg
-#         asset_name: Nivaes.DataTestGenerator.XUnit.${{ steps.get_version.outputs.version }}.nupkg
-#         asset_content_type: application/octet-stream
 
     - name: Dump steps context
       env:
