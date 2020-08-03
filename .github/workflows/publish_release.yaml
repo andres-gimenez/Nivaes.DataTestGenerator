@@ -56,15 +56,29 @@ jobs:
         MATRIX_CONTEXT: ${{ toJson(matrix) }}
       run: echo "$MATRIX_CONTEXT"
 
+    - name: Dump event_name
+      run: echo ${{ github.context.ref }}
+
+    - name: Dump event_name
+      run: echo ${{ github.context.event_name }}
+
     - name: Dump upload_url 1
       run: echo ${{ github.context.event.release.upload_url }}
+
+    - name: Dump upload_url 1_2
+      run: echo ${{ github.event.release.upload_url }}
 
     - name: Dump upload_url 2
       run: echo ${{ github.context.release.upload_url }}
 
+    - name: Dump upload_url 2_2
+      run: echo ${{ github.release.upload_url }}
+
     - name: Dump upload_url 3
       run: echo ${{ github.context.event.upload_url }}
 
+    - name: Dump upload_url 3_2
+      run: echo ${{ github.event.upload_url }}
 
     - name: Checkout
       uses: actions/checkout@v2
@@ -113,7 +127,7 @@ jobs:
 #     - name: Publish nuget
 #       run: echo $"{{ github.event.release.assets[].browser_download_url }}"
       
-#     - name: Publish nuget
+#     - name: Publish nuget 
 #       run: echo $"{{ github.event.release.assets.*.browser_download_url }}"
     
 #     - name: Download packages
