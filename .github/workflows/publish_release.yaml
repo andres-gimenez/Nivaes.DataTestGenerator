@@ -103,8 +103,9 @@ jobs:
       env:
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-         upload_url: ${{ steps.create_release.outputs.upload_url }}
-         targets: ./Artifacts/**/*.nupkg
+         upload_url: ${{ github.event.release.upload_url }}
+         targets: ./Artifacts/*.nupkg
+
 
 #     - name: Test
 #       run: dotnet test --configuration Release --no-build --verbosity normal
