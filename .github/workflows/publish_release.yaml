@@ -68,5 +68,5 @@ jobs:
       env:
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        token: ${{ steps.create_release.outputs.upload_url }}
+        token: ${{ secrets.TOKENN }}
         outputPath: .
