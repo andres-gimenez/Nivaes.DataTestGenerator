@@ -2,10 +2,12 @@ name: Publish Release
 
 on:
   release:
-#     types: [published]
-#     types: [released]
-#     types: [prereleased]
-#     types: [deleted]
+    #types:[edited]
+    #types: [published]
+    types:
+      - released
+      - prereleased
+    #types: [deleted]
 
 jobs:
   publish_release:
@@ -16,30 +18,19 @@ jobs:
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: echo "$GITHUB_CONTEXT"
-    
-    - name: Dump Job context
+
+    - name: release
+      if: github.event_name.types == 'released'
+      run: echo Release
+
+    - name: release
+      if: github.event_name.types == 'prereleased'
+      run: echo Prereleased
+
+    - name: Download Release Asset
       env:
-        JOB_CONTEXT: ${{ toJson(job) }}
-      run: echo "$JOB_CONTEXT"
-    
-    - name: Dump Steps context
-      env:
-        STEPS_CONTEXT: ${{ toJson(steps) }}
-      run: echo "$STEPS_CONTEXT"
-      
-    - name: Dump Runner context
-      env:
-        RUNNER_CONTEXT: ${{ toJson(runner) }}
-      run: echo "$RUNNER_CONTEXT"
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: nivaes/download-release-assets@master
 
-    - name: Checkout
-      uses: actions/checkout@v2
-
-
-    - name: Publish nuget
-      #if: github.event.action = "released"
-      run: echo $"{{ event.release.assets[].browser_download_url }}"
-
-#     - name: Publish prereleased nuget
-#      if: github.event.action = "prereleased"
-#      run: echo $"{{ event.release.assets[].browser_download_url }}"
+    #- name: Publish packages
+    #  run: dotnet nuget push ./**/**.nupkg --source nuget.org --api-key ${{secrets.NIVAES_NUGET_TOKEN}}
