@@ -63,6 +63,9 @@ jobs:
       run: echo ${{ github.event.release.upload_url }}
 
     - name: Download Release Asset
+      uses: nivaes/download-release-assets@master
       env:
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      uses: nivaes/download-release-assets@master
+      with:
+        token: ${{ steps.create_release.outputs.upload_url }}
+        outputPath: .
